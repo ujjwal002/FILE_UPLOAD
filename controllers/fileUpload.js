@@ -81,3 +81,44 @@ exports.imageUpload=async(req,res)=>{
         
     }
 }
+// video upload
+
+exports.videoUpload  = async(req,res)=>{
+    try{
+        
+    }
+    catch{
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
