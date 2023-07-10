@@ -29,8 +29,11 @@ function isFileTypeSupported(type,supportedTypes){
     return supportedTypes.includes(type);
 }
 
-async function uploadFileToCloudinary(file,folder){
+async function uploadFileToCloudinary(file,folder,quality){
     const options = {folder}
+    if(quality){
+        options.quality = quality;
+    }
     options.resource_type="auto";
     return await cloudinary.uploader.upload(file.tempFilePath,options);
 }
@@ -131,6 +134,51 @@ exports.videoUpload = async (req, res) => {
     });
   }
 };
+
+exports.imageSizeReducer = async (req, res) => {
+  try {
+    const { name, tags, email } = req.body;
+
+    console.log(name, tags, email);
+
+    const file = req.files.imageFiles;
+
+    console.log(file);
+
+    const supportFile = ["jpg", "jpeg", "png"];
+
+    const fileTypes = file.name.split(".")[1].toLowerCase();
+
+    if (!isFileTypeSupported(fileTypes, supportFile)) {
+      return res.status(400).json({
+        success: false,
+        message: "File type not supported",
+      });
+    }
+    console.log("uploading to codehelp");
+
+    const response = await uploadFileTocloudinary(file, "codehelp", 30);
+    console.log(response);
+
+    // db me entry save karni
+
+    const fileData = await File.create({
+      name,
+      tags,
+      email,
+      imageUrl: response.secure_url,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(400).json({
+      status: "false",
+      message:
+        "Error while doing size reduce in the code and go to controller folder to view the error",
+    });
+  }
+};
+    
 
 
 
