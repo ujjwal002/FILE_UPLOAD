@@ -3,7 +3,7 @@ const express  = require('express');
 const router = express.Router();
 
 
-const {localFileUpload, imageUpload} = require('../controllers/fileUpload');
+const {localFileUpload, imageUpload,videoUpload} = require('../controllers/fileUpload');
 
 
 router.post('/localFileUpload',localFileUpload);
