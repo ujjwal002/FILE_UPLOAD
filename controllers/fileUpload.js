@@ -31,6 +31,7 @@ function isFileTypeSupported(type,supportedTypes){
 
 async function uploadFileToCloudinary(file,folder){
     const options = {folder}
+    options.resource_type="auto";
     return await cloudinary.uploader.upload(file.tempFilePath,options);
 }
 
